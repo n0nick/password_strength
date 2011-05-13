@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+	  
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Password Strength : Example</title>
+<style type="text/css">
+body {
+	padding: 50px;
+	}
+h1 a {
+	color: #000;
+	}
+input {
+	border: 1px solid #999;
+	margin: 0 5px;
+	}
+.password_strength {
+	padding: 0 5px;
+	display: inline-block;
+	}
+.password_strength_1 {
+	background-color: #fcb6b1;
+	}
+.password_strength_2 {
+	background-color: #fccab1;
+	}
+.password_strength_3 {
+	background-color: #fcfbb1;
+	}
+.password_strength_4 {
+	background-color: #dafcb1;
+	}
+.password_strength_5 {
+	background-color: #bcfcb1;
+	}
+</style>
+</head>
+<body>
+
+<h1><a href="http://plugins.jquery.com/project/password_strength">Password Strength</a>: Demo</h1>
+
+<form method="post" action="">
+<p>
+<label for="password">Enter Password:</label>
+<input type="password" name="password" id="password" value="" />
+</p>
+</form>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script>
+<script type="text/javascript" src="jquery.password_strength.js"></script>
+<script type="text/javascript">
+$('form').attr('autocomplete', 'off');
+$('#password').password_strength();
+</script>
+</body>
+</html>

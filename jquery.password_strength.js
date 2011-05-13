@@ -1,5 +1,5 @@
 /* 
- * Password Strength (0.1.1)
+ * Password Strength (0.1.2)
  * by Sagie Maoz (n0nick.net)
  * n0nick@php.net
  *
@@ -94,7 +94,8 @@ $.fn.password_strength = function(options)
 			3 : 'Normal strength',
 			4 : 'Strong password',
 			5 : 'Very strong password'
-		}
+		},
+		'onCheck': null
 	}, options);
 	
 	return this.each(function()
@@ -125,6 +126,9 @@ $.fn.password_strength = function(options)
 			else
 			{
 				container.text('').attr('class', 'password_strength');
+			}
+			if (settings.onCheck) {
+				settings.onCheck.call(this, level)
 			}
 		});
 	});

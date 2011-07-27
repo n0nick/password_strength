@@ -1,4 +1,4 @@
-/* 
+/*
  * Password Strength (0.1.2)
  * by Sagie Maoz (n0nick.net)
  * n0nick@php.net
@@ -24,7 +24,7 @@ var passwordStrength = new function()
 	{
 		var match = val.match(rex);
 		return match ? match.length : 0;
-	}
+	};
 	
 	this.getStrength = function(val, minLength)
 	{	
@@ -55,33 +55,27 @@ var passwordStrength = new function()
 		if (len > 10) { strength+= 1; }
 		
 		return strength;
-	}
+	};
 	
 	this.getStrengthLevel = function(val, minLength)
 	{
-		var strength = this.getStrength(val, minLength);
-		switch (true)
-		{
-			case (strength <= 0):
-				return 1;
-				break;
-			case (strength > 0 && strength <= 4):
-				return 2;
-				break;
-			case (strength > 4 && strength <= 8):
-				return 3;
-				break;
-			case (strength > 8 && strength <= 12):
-				return 4;
-				break;
-			case (strength > 12):
-				return 5;
-				break;
+		var strength = this.getStrength(val, minLength),
+				val = 1;
+		if (strength <= 0) {
+			val = 1;
+		} else if (strength > 0 && strength <= 4) {
+			val = 2;
+		} else if (strength > 4 && strength <= 8) {
+			val = 3;
+		} else if (strength > 8 && strength <= 12) {
+			val = 4;
+		} else if (strength > 12) {
+			val = 5;
 		}
-		
-		return 1;
-	}
-}
+
+		return val;
+	};
+};
 
 $.fn.password_strength = function(options)
 {
@@ -100,22 +94,24 @@ $.fn.password_strength = function(options)
 	
 	return this.each(function()
 	{
+		var container = null;
 		if (settings.container)
 		{
-			var container = $(settings.container);
+			container = $(settings.container);
 		}
 		else
 		{
-			var container = $('<span/>').attr('class', 'password_strength');
+			container = $('<span/>').attr('class', 'password_strength');
 			$(this).after(container);
 		}
 		
 		$(this).keyup(function()
 		{
-			var val = $(this).val();
+			var val = $(this).val(),
+					level = passwordStrength.getStrengthLevel(val, settings.minLength);
+
 			if (val.length > 0)
 			{
-				var level = passwordStrength.getStrengthLevel(val, settings.minLength);
 				var _class = 'password_strength_' + level;
 				
 				if (!container.hasClass(_class) && level in settings.texts)
@@ -128,7 +124,7 @@ $.fn.password_strength = function(options)
 				container.text('').attr('class', 'password_strength');
 			}
 			if (settings.onCheck) {
-				settings.onCheck.call(this, level)
+				settings.onCheck.call(this, level);
 			}
 		});
 	});

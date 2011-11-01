@@ -59,8 +59,8 @@ var passwordStrength = new function()
 	
 	this.getStrengthLevel = function(val, minLength)
 	{
-		var strength = this.getStrength(val, minLength),
-				val = 1;
+		var strength = this.getStrength(val, minLength);
+		val = 1;
 		if (strength <= 0) {
 			val = 1;
 		} else if (strength > 0 && strength <= 4) {
@@ -81,6 +81,7 @@ $.fn.password_strength = function(options)
 {
 	var settings = $.extend({
 		'container' : null,
+		'bar': null,
 		'minLength' : 6,
 		'texts' : {
 			1 : 'Too weak',
@@ -94,7 +95,7 @@ $.fn.password_strength = function(options)
 	
 	return this.each(function()
 	{
-		var container = null;
+		var container = null, bar = null;
 		if (settings.container)
 		{
 			container = $(settings.container);
@@ -104,6 +105,11 @@ $.fn.password_strength = function(options)
 			container = $('<span/>').attr('class', 'password_strength');
 			$(this).after(container);
 		}
+
+		if (settings.bar)
+		{
+			bar = $(settings.bar);
+		}
 		
 		$(this).keyup(function()
 		{
@@ -112,16 +118,22 @@ $.fn.password_strength = function(options)
 
 			if (val.length > 0)
 			{
-				var _class = 'password_strength_' + level;
+				var _class = 'password_strength_' + level,
+					_barClass = 'password_bar_' + level;
 				
 				if (!container.hasClass(_class) && level in settings.texts)
 				{
 					container.text(settings.texts[level]).attr('class', 'password_strength ' + _class);
 				}
+				if (bar && !bar.hasClass(_barClass))
+				{
+					bar.attr('class', 'password_bar ' + _barClass);
+				}
 			}
 			else
 			{
 				container.text('').attr('class', 'password_strength');
+				if (bar) bar.attr('class', 'password_bar');
 			}
 			if (settings.onCheck) {
 				settings.onCheck.call(this, level);

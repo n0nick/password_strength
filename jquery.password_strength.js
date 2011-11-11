@@ -60,6 +60,7 @@ var passwordStrength = new function()
 	this.getStrengthLevel = function(val, minLength)
 	{
 		var strength = this.getStrength(val, minLength);
+
 		val = 1;
 		if (strength <= 0) {
 			val = 1;
@@ -95,7 +96,7 @@ $.fn.password_strength = function(options)
 	
 	return this.each(function()
 	{
-		var container = null, bar = null;
+		var container = null, $bar = null;
 		if (settings.container)
 		{
 			container = $(settings.container);
@@ -108,7 +109,7 @@ $.fn.password_strength = function(options)
 
 		if (settings.bar)
 		{
-			bar = $(settings.bar);
+			$bar = $(settings.bar);
 		}
 		
 		$(this).keyup(function()
@@ -119,21 +120,23 @@ $.fn.password_strength = function(options)
 			if (val.length > 0)
 			{
 				var _class = 'password_strength_' + level,
-					_barClass = 'password_bar_' + level;
+            _barClass = 'password_bar_' + level;
 				
 				if (!container.hasClass(_class) && level in settings.texts)
 				{
 					container.text(settings.texts[level]).attr('class', 'password_strength ' + _class);
 				}
-				if (bar && !bar.hasClass(_barClass))
+				if ($bar && !$bar.hasClass(_barClass))
 				{
-					bar.attr('class', 'password_bar ' + _barClass);
+					$bar.attr('class', 'password_bar ' + _barClass);
 				}
 			}
 			else
 			{
 				container.text('').attr('class', 'password_strength');
-				if (bar) bar.attr('class', 'password_bar');
+				if ($bar) {
+          $bar.attr('class', 'password_bar');
+        }
 			}
 			if (settings.onCheck) {
 				settings.onCheck.call(this, level);

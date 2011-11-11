@@ -1,5 +1,5 @@
 /*
- * Password Strength (0.1.2)
+ * Password Strength (0.1.4)
  * by Sagie Maoz (n0nick.net)
  * n0nick@php.net
  *
@@ -82,7 +82,7 @@ $.fn.password_strength = function(options)
 {
 	var settings = $.extend({
 		'container' : null,
-		'bar': null,
+		'bar': null, // thanks codemonkeyking
 		'minLength' : 6,
 		'texts' : {
 			1 : 'Too weak',
@@ -112,7 +112,7 @@ $.fn.password_strength = function(options)
 			$bar = $(settings.bar);
 		}
 		
-		$(this).keyup(function()
+		$(this).bind('keyup.password_strength', function()
 		{
 			var val = $(this).val(),
 					level = passwordStrength.getStrengthLevel(val, settings.minLength);
@@ -120,7 +120,7 @@ $.fn.password_strength = function(options)
 			if (val.length > 0)
 			{
 				var _class = 'password_strength_' + level,
-            _barClass = 'password_bar_' + level;
+						_barClass = 'password_bar_' + level;
 				
 				if (!container.hasClass(_class) && level in settings.texts)
 				{
@@ -135,13 +135,17 @@ $.fn.password_strength = function(options)
 			{
 				container.text('').attr('class', 'password_strength');
 				if ($bar) {
-          $bar.attr('class', 'password_bar');
-        }
+					$bar.attr('class', 'password_bar');
+				}
 			}
 			if (settings.onCheck) {
 				settings.onCheck.call(this, level);
 			}
 		});
+
+		if ($(this).val() != '') { // thanks Jason Judge
+				$(this).trigger('keyup.password_strength');
+		}
 	});
 };
 

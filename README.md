@@ -12,6 +12,8 @@ The options argument is optional. Available values to set:
 
 * __container__: Element to display the strength text in. If none given, a span would be created immediately after the password field.
 
+* __bar__: External element to set a strength class to (optional).
+
 * __minLength__: Minimum password length.
 
 * __texts__: An array of strength texts for the 5 different levels, to override the default texts.

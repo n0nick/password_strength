@@ -112,7 +112,7 @@ $.fn.password_strength = function(options)
 			$bar = $(settings.bar);
 		}
 		
-		$(this).bind('keyup.password_strength', function()
+		$(this).bind('keyup.password_strength input', function()
 		{
 			var val = $(this).val(),
 					level = passwordStrength.getStrengthLevel(val, settings.minLength);
